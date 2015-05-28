@@ -19,7 +19,7 @@ public class Client {
 	private Customer currentCustomer;
 
 	public Scanner in;
-	
+
 	public Client() throws MalformedURLException, RemoteException, NotBoundException{
 		String registryURL = "rmi://localhost:1099/retailer";  
 		retailer = (RetailerInterface)Naming.lookup(registryURL); // find the remote object and cast it to an Retailer object
@@ -62,31 +62,35 @@ public class Client {
 		}
 		return false;
 	}
-	
+
 	public boolean customerSignIn(){
 		if(currentCustomer != null){
 			customerSignOut();
 		}
-		System.out.println("Input customer ReferenceNumber:");
-		int customerReferenceNumber = Integer.parseInt(in.next());
-		System.out.println("Input customer password:");
-		String password = in.next();
-		try {
-			currentCustomer = retailer.signIn(customerReferenceNumber, password);
-			if(currentCustomer == null){
-				System.out.println("Failed to sign in. Please try again!");
+		try{
+			System.out.println("Input customer ReferenceNumber:");
+			int customerReferenceNumber = Integer.parseInt(in.next());
+			System.out.println("Input customer password:");
+			String password = in.next();
+			try {
+				currentCustomer = retailer.signIn(customerReferenceNumber, password);
+				if(currentCustomer == null){
+					System.out.println("Failed to sign in. Please try again!");
+					return false;
+				}else{
+					System.out.println("Signed in. Your person informations are:" + currentCustomer.toString());
+					return true;
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
 				return false;
-			}else{
-				System.out.println("Signed in. Your person informations are:" + currentCustomer.toString());
-				return true;
 			}
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		} catch (NumberFormatException e){
+			System.out.println("ReferenceNumber should contains digits only. Failed!");
 			return false;
 		}
-		
 	}
-	
+
 	public void customerSignOut(){
 		if(currentCustomer == null)
 			return;
@@ -107,7 +111,7 @@ public class Client {
 			}
 		}
 	}
-	
+
 	public ArrayList<ItemShippingStatus> makeOrder(){
 		if(currentCustomer == null){
 			System.out.println("Operation is only allowed for registed user. Please sign in.");
@@ -169,7 +173,7 @@ public class Client {
 					System.out.println("Wrong input. Try again.");
 				}
 			}while(true);
-			
+
 			client.in.close();
 		} catch (MalformedURLException | RemoteException | NotBoundException e) {
 			e.printStackTrace();
