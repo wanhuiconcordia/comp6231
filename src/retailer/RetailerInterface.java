@@ -6,12 +6,11 @@ import java.rmi.RemoteException;
 import tools.Customer;
 import tools.Item;
 import tools.ItemShippingStatus;
-import tools.Product;
 import tools.SignUpResult;
 
 public interface RetailerInterface extends Remote{
 	
-	public ArrayList<Product> getCatalog(int customerReferenceNumber) throws RemoteException;
+	public ArrayList<Item> getCatalog(int customerReferenceNumber) throws RemoteException;
 	
 	public ArrayList<ItemShippingStatus> submitOrder(int customerReferenceNumber, ArrayList<Item> itemList) throws RemoteException;
 	

@@ -16,17 +16,28 @@ public class RetailerImplimentation extends UnicastRemoteObject implements Retai
 
 	private static final long serialVersionUID = -3984384512642303801L;
 
-	private WarehouseImplementation wareHouse;
+	private WarehouseImplementation warehouse1;
+	private WarehouseImplementation warehouse2;
+	private WarehouseImplementation warehouse3;
 	public RetailerImplimentation() throws RemoteException, MalformedURLException, NotBoundException {
 		super();
-//		wareHouse = new WarehouseImplementation();
+//		warehouse1 = new WarehouseImplementation("Warehouse1");
+//		warehouse2 = new WarehouseImplementation("Warehouse2");
+//		warehouse3 = new WarehouseImplementation("Warehouse3");
 	}
 	
 	@Override
-	public ArrayList<Product> getCatalog(int customerReferenceNumber) throws RemoteException {
-		// TODO Auto-generated method stub
-		System.out.println("got a getCatalog event");
-		return null;
+	public ArrayList<Item> getCatalog(int customerReferenceNumber) throws RemoteException {
+		ArrayList<Item> allItems = new ArrayList<Item>();
+		ArrayList<Item> itemList1 = warehouse1.getItemList();
+		ArrayList<Item> itemList2 = warehouse2.getItemList();
+		ArrayList<Item> itemList3 = warehouse3.getItemList();
+
+		allItems = mergeItems(allItems, itemList1);
+		allItems = mergeItems(allItems, itemList2);
+		allItems = mergeItems(allItems, itemList3);
+		
+		return allItems;
 	}
 
 	@Override
@@ -45,26 +56,41 @@ public class RetailerImplimentation extends UnicastRemoteObject implements Retai
 	public SignUpResult signUp(String name, String password, String street1,
 			String street2, String city, String state, String zip,
 			String country) throws RemoteException {
-		
-		// TODO
-		// if(name exists in database){
-		//		return new SignUpResult(false, -1, "Name exists");		
-		// }else{
-		// 		generate a random customerReferrenceNumber which is not in database
 		System.out.println("got a signup event");
-		System.out.println("will call warehouse.replenish()");
-//		wareHouse.replenish();
-		
-		return new SignUpResult(true, 12345, "Sign up properly.");
-		//}
+		//TODO return customerManager.register(name, password, street1, street2, city, state, zip, country);
+		return new SignUpResult(true, 1111, "good");
 	}
 
 	@Override
-	public Customer signIn(int customerReferenceNumber, String password)
-			throws RemoteException {
-		// TODO Auto-generated method stub
+	public Customer signIn(int customerReferenceNumber, String password) throws RemoteException {
 		System.out.println("got a signin event");
-		return null;
+		//TODO return customerManager.find(customerReferenceNumber, password);
+		return  null;
+				
 	}
-
+	
+	private ArrayList<Item> mergeItems(ArrayList<Item> itemList1, ArrayList<Item> itemList2){
+		ArrayList<Item> allItems = new ArrayList<Item>();
+		if(itemList1 != null){
+			allItems.addAll(itemList1);
+		}
+		
+		if(itemList2 != null){
+			Item currentItem;
+			while(!itemList2.isEmpty()){
+				currentItem = itemList2.remove(0);
+				boolean existFlag = false;
+				for(Item item: allItems){
+					if(currentItem.isSameProductAs(item)){
+						item.setQuantity(item.getQuantity() + currentItem.getQuantity());
+						existFlag = true;
+					}
+				}
+				if(!existFlag){
+					allItems.add(currentItem);
+				}
+			}
+		}
+		return allItems;
+	}
 }

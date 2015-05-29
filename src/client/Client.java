@@ -4,6 +4,7 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 import retailer.RetailerInterface;
@@ -13,6 +14,10 @@ import tools.ItemShippingStatus;
 import tools.Product;
 import tools.SignUpResult;
 
+/**
+ * @author comp6231.team5
+ *
+ */
 public class Client {
 
 	private RetailerInterface retailer;
@@ -25,7 +30,10 @@ public class Client {
 		retailer = (RetailerInterface)Naming.lookup(registryURL); // find the remote object and cast it to an Retailer object
 		in = new Scanner(System.in);
 	}
-
+	
+	/**
+	 * @return
+	 */
 	public boolean customerSignUp(){
 		if(currentCustomer != null){
 			customerSignOut();
@@ -98,7 +106,7 @@ public class Client {
 		currentCustomer = null;
 	}
 
-	public ArrayList<Product> getCatalog(){
+	public ArrayList<Item> getCatalog(){
 		if(currentCustomer == null){
 			System.out.println("Operation is only allowed for registed user. Please sign in.");
 			return null;
@@ -117,12 +125,29 @@ public class Client {
 			System.out.println("Operation is only allowed for registed user. Please sign in.");
 			return null;
 		}else{
-			ArrayList<Item> itemList = new ArrayList<Item>();
-			//TODO Provide an interface for making itemList
 			try {
-				return retailer.submitOrder(currentCustomer.getCustomerReferenceNumber(), itemList);
-			} catch (RemoteException e) {
-				e.printStackTrace();
+				ArrayList<Item> itemOrderList = new ArrayList<Item>();
+				ArrayList<Item> retailerProductCatalog = retailer.getCatalog(currentCustomer.getCustomerReferenceNumber());
+				Random randomGenerator = new Random();
+				int randomQuantity;
+				Item tmpItem;
+				for (Item item : retailerProductCatalog) {
+					tmpItem = item;
+					randomQuantity = randomGenerator.nextInt(item.getQuantity());
+					tmpItem.setQuantity(randomQuantity);
+					if(randomQuantity > 0){
+						itemOrderList.add(tmpItem);
+					}
+				}
+
+				try {
+					return retailer.submitOrder(currentCustomer.getCustomerReferenceNumber(), itemOrderList);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+					return null;
+				}
+			} catch (RemoteException e1) {
+				e1.printStackTrace();
 				return null;
 			}
 		}
@@ -133,12 +158,12 @@ public class Client {
 			Client client = new Client();
 			String operation;
 			do{
-				System.out.println("Type to [1] to sign up.");
-				System.out.println("Type to [2] to sign in.");
-				System.out.println("Type to [3] to sign out.");
-				System.out.println("Type to [4] to get product catalog.");
-				System.out.println("Type to [5] to make an order.");
-				System.out.println("Type to [6] to quit.");
+				System.out.println("Type [1] to sign up.");
+				System.out.println("Type [2] to sign in.");
+				System.out.println("Type [3] to sign out.");
+				System.out.println("Type [4] to get product catalog.");
+				System.out.println("Type [5] to make an order.");
+				System.out.println("Type [6] to quit.");
 				operation = client.in.next();
 				if(operation.compareTo("1") == 0){
 					client.customerSignUp();
@@ -150,10 +175,10 @@ public class Client {
 					client.customerSignOut();
 				}
 				else if(operation.compareTo("4") == 0){
-					ArrayList<Product> products = client.getCatalog();
-					if(products != null){
-						for (Product product : products) {
-							System.out.println(product.toString());
+					ArrayList<Item> items = client.getCatalog();
+					if(items != null){
+						for (Item item : items) {
+							System.out.println(item.toString());
 						}
 					}
 				}
