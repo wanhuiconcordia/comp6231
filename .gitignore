@@ -1,9 +1,3 @@
 #ignore bin
 bin
-#ignore .settings
-#.settings
-#ignore .git
-#.git
-#ignore .project
-#.project
-#ignore .classpath
+!bin/settings/*
