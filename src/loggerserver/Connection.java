@@ -1,6 +1,7 @@
 package loggerserver;
-import java.net.*;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.net.Socket;
 public class Connection extends Thread{
 	private Socket socket;
 	private boolean keepWorking;
