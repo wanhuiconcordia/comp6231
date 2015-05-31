@@ -58,7 +58,7 @@ public class RetailerImplimentation extends UnicastRemoteObject implements Retai
 		}else if(orderItemList.size() == 0){
 			return null;
 		}else{
-			int []randomOrder = getRandOrder(orderItemList.size());
+			int []randomOrder = getRandOrder(warehouses.length);
 			ArrayList<ItemShippingStatus> itemShippingStatusList = new ArrayList<ItemShippingStatus>();
 			ArrayList<Item> itemsGotFromCurrentWarehouse;
 			for(int currentWarehouseIndex: randomOrder){
