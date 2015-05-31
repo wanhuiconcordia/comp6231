@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<clients>
+  <client>
+    <customerReferenceNumber>1</customerReferenceNumber>
+    <name>ting</name>
+    <street1>lincoln</street1>
+    <street2></street2>
+    <city>montreal</city>
+    <state>QC</state>
+    <zip>201</zip>
+    <country>Canana</country>
+  </client>
+  <client>
+    <customerReferenceNumber>77</customerReferenceNumber>
+    <name>dudu</name>
+    <street1>linclon</street1>
+    <street2></street2>
+    <city>montreal</city>
+    <state>qc</state>
+    <zip>zip</zip>
+    <country>canada</country>
+  </client>
+</clients>

@@ -1,0 +1,7 @@
+<orders>
+	<order>
+		<orderNum>1</orderNum><customerRef>001</customerRef>
+		<productType>TV</productType>
+		<quantity>3</quantity>
+		<unitPrice>1000</unitPrice>
+		<ifPaid>false</ifPaid></order></orders>

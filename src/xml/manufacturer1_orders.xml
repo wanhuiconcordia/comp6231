@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<orders>
+  <order>
+    <orderNum>222</orderNum>
+    <customerRef>002</customerRef>
+    <productType>video camera</productType>
+    <quantity>10</quantity>
+    <unitPrice>600.0</unitPrice>
+    <ifPaid>yes</ifPaid>
+  </order>
+  <order>
+    <orderNum>1</orderNum>
+    <customerRef>001</customerRef>
+    <productType>DVD player</productType>
+    <quantity>4</quantity>
+    <unitPrice>0.0</unitPrice>
+    <ifPaid>no</ifPaid>
+  </order>
+  <order>
+    <orderNum>10</orderNum>
+    <customerRef>002</customerRef>
+    <productType>video camera</productType>
+    <quantity>10</quantity>
+    <unitPrice>600.0</unitPrice>
+    <ifPaid>no</ifPaid>
+  </order>
+  <order>
+    <orderNum>6</orderNum>
+    <customerRef>002</customerRef>
+    <productType>TV</productType>
+    <quantity>6</quantity>
+    <unitPrice>600.0</unitPrice>
+    <ifPaid>no</ifPaid>
+  </order>
+  <order>
+    <orderNum>9</orderNum>
+    <customerRef>002</customerRef>
+    <productType>TV</productType>
+    <quantity>9</quantity>
+    <unitPrice>600.0</unitPrice>
+    <ifPaid>no</ifPaid>
+  </order>
+  <order>
+    <orderNum>99</orderNum>
+    <customerRef>002</customerRef>
+    <productType>video camera</productType>
+    <quantity>10</quantity>
+    <unitPrice>600.0</unitPrice>
+    <ifPaid>yes</ifPaid>
+  </order>
+  <order>
+    <orderNum>88</orderNum>
+    <customerRef>002</customerRef>
+    <productType>video camera</productType>
+    <quantity>10</quantity>
+    <unitPrice>600.0</unitPrice>
+    <ifPaid>no</ifPaid>
+  </order>
+</orders>

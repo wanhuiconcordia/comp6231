@@ -1,0 +1,14 @@
+<products>
+	<product>
+		<productType>DVD player</productType>
+		<unitPrice>109.00</unitPrice>
+	</product>
+	<product>
+		<productType>video camera</productType>
+		<unitPrice>289.99</unitPrice>
+	</product>
+	<product>
+		<productType>TV</productType>
+		<unitPrice>499.00</unitPrice>
+	</product>
+</products>
