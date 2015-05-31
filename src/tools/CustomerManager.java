@@ -81,4 +81,13 @@ public class CustomerManager {
 		}
 		return false;
 	}
+	
+	public synchronized Customer getCustomerByReferenceNumber(int customerReferenceNumber){
+		for(Customer customer: customers){
+			if(customer.getCustomerReferenceNumber() == customerReferenceNumber){
+				return customer;
+			}
+		}
+		return null;
+	}
 }

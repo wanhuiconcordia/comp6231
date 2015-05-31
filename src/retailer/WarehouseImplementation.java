@@ -43,7 +43,7 @@ public class WarehouseImplementation extends UnicastRemoteObject implements Ware
 		inventory = new ArrayList<Item>();
 	}
 
-	public ItemShippingStatus shipGoods(ArrayList<Item> itemList, Customer customer) {
+	public ArrayList<Item> shipGoods(ArrayList<Item> itemList, Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
