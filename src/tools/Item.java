@@ -15,6 +15,11 @@ public class Item extends Product implements Serializable{
 		this.quantity = quantity;
 	}
 	
+	public Item(Item otherItem){
+		super(otherItem.manufacturerName, otherItem.productType, otherItem.unitPrice);
+		this.quantity = otherItem.quantity;
+	}
+	
 	public String toString(){
 		return super.toString() + ", Quantity:" + quantity; 
 	}

@@ -10,6 +10,15 @@ public class ItemShippingStatus extends Item implements Serializable{
 		this.shippingStatus = shippingStatus;
 	}
 	
+	/**
+	 * @param item
+	 * @param b
+	 */
+	public ItemShippingStatus(Item item, boolean shippingStatus) {
+		super(item);
+		this.shippingStatus = shippingStatus;
+	}
+
 	public String toString(){
 		return super.toString() + ", Shipping status:" + (shippingStatus ? "shipped" : "not shipped"); 
 	}
