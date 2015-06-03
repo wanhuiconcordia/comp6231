@@ -6,18 +6,23 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
+import manufacturer.ManufacturerInterface;
 import tools.Customer;
 import tools.Item;
 import tools.ItemShippingStatus;
-import manufacturer.ManufacturerInterface;
 
 
 public class WarehouseImplementation extends UnicastRemoteObject implements WarehouseInterface {
+	private static final long serialVersionUID = 7663849915764632348L;
+	
+	private String name;
+	
 	private ManufacturerInterface manufacturer1;
 	private ManufacturerInterface manufacturer2;
 	private ManufacturerInterface manufacturer3;
-	private static final long serialVersionUID = 7663849915764632348L;
-	private String name;
+
+	private ArrayList<Item> inventory;
+
 	
 	public WarehouseImplementation() throws RemoteException, MalformedURLException, NotBoundException {
 		this("None-name warehouse");
@@ -32,12 +37,13 @@ public class WarehouseImplementation extends UnicastRemoteObject implements Ware
 		String registryUri1 = "rmi://" + registryHost +"/" + port + "/manufacturer1";
 		String registryUri2 = "rmi://" + registryHost +"/" + port + "/manufacturer2";
 		String registryUri3 = "rmi://" + registryHost +"/" + port + "/manufacturer3";
-		manufacturer1 = (ManufacturerInterface)Naming.lookup(registryUri1); // find the remote object and cast it to an Retailer object
-		manufacturer2 = (ManufacturerInterface)Naming.lookup(registryUri2);
-		manufacturer3 = (ManufacturerInterface)Naming.lookup(registryUri3);
+//		manufacturer1 = (ManufacturerInterface)Naming.lookup(registryUri1); // find the remote object and cast it to an Retailer object
+//		manufacturer2 = (ManufacturerInterface)Naming.lookup(registryUri2);
+//		manufacturer3 = (ManufacturerInterface)Naming.lookup(registryUri3);
+		inventory = new ArrayList<Item>();
 	}
 
-	public ItemShippingStatus shipGoods(ArrayList<Item> itemList, Customer customer) {
+	public ArrayList<Item> shipGoods(ArrayList<Item> itemList, Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -60,6 +66,10 @@ public class WarehouseImplementation extends UnicastRemoteObject implements Ware
 	}
 	
 	public ArrayList<Item> getItemList(){
-		return null;
+		inventory.add(new Item("manu1", "DVD", 20, 10));
+		inventory.add(new Item("manu2", "DVD", 25, 10));
+		inventory.add(new Item("manu1", "TV", 100, 10));
+		
+		return inventory;
 	}
 }

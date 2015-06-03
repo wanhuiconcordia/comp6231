@@ -1,7 +1,8 @@
 package retailer;
-import java.rmi.*;
-import java.rmi.registry.Registry;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 
 public class Retailer {
@@ -25,7 +26,7 @@ public class Retailer {
 			System.out.println("Retailer server is ready.");
 		}
 		catch (Exception e) {
-			System.out.println("Exception in HelloServer.main: " + e);
+			System.out.println("Exception in Retailer.main: " + e);
 		}
 	}
 

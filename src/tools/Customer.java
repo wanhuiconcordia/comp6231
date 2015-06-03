@@ -48,6 +48,10 @@ public class Customer implements Serializable{
 		return name;
 	}
 	
+	public String getPassword(){
+		return password;
+	}
+	
 	public int getCustomerReferenceNumber(){
 		return customerReferenceNumber;
 	}

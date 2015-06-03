@@ -1,7 +1,7 @@
 package retailer;
-import java.util.ArrayList;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 import tools.Customer;
 import tools.Item;

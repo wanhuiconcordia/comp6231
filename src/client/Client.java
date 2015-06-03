@@ -11,7 +11,6 @@ import retailer.RetailerInterface;
 import tools.Customer;
 import tools.Item;
 import tools.ItemShippingStatus;
-import tools.Product;
 import tools.SignUpResult;
 
 /**
@@ -62,6 +61,7 @@ public class Client {
 				System.out.println(signUpResult.message);
 				if(signUpResult.result){
 					currentCustomer = new Customer(signUpResult.customerReferenceNumber, name, password, street1, street2, city, state, zip, country);
+					System.out.println("Your creferenceNumber is:" + signUpResult.customerReferenceNumber);
 				}
 				return signUpResult.result;
 			}
@@ -115,6 +115,9 @@ public class Client {
 				return retailer.getCatalog(currentCustomer.getCustomerReferenceNumber());
 			} catch (RemoteException e) {
 				e.printStackTrace();
+				return null;
+			} catch (NullPointerException e){
+				System.out.println("Catalog is empty.");
 				return null;
 			}
 		}
