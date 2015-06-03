@@ -43,7 +43,7 @@ public class WarehouseImplementation extends UnicastRemoteObject implements Ware
 		inventory = new ArrayList<Item>();
 	}
 
-	public ArrayList<Item> shipGoods(ArrayList<Item> itemList, Customer customer) {
+	public ArrayList<Item> shipGoods(final ArrayList<Item> itemList, Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -58,7 +58,7 @@ public class WarehouseImplementation extends UnicastRemoteObject implements Ware
 
 	public void replenish() throws RemoteException{
 		System.out.println("Will call manufacturer.processPurchaseOrder");
-		manufacturer1.processPurchaseOrder("I want to purchase a tv");
+//		manufacturer1.processPurchaseOrder("I want to purchase a tv");
 	}
 	
 	public String getName(){

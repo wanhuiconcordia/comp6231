@@ -63,13 +63,51 @@ public class RetailerImplimentation extends UnicastRemoteObject implements Retai
 			ArrayList<Item> itemsGotFromCurrentWarehouse;
 			for(int currentWarehouseIndex: randomOrder){
 				itemsGotFromCurrentWarehouse = warehouses[currentWarehouseIndex].shipGoods(orderItemList, currentCustomer);
-				//add itemsGotFromCurrentWarehouse to itemShippingStatusList
-				//subtract items of itemsGotFromCurrentWarehouse from orderItemList
-				//subStract(orderItemList, itemsGotFromCurrentWarehouse)
+				if(itemsGotFromCurrentWarehouse != null){
+					//add itemsGotFromCurrentWarehouse to itemShippingStatusList
+					for(Item item: itemsGotFromCurrentWarehouse){
+						boolean isItemAddedInShipingList = false;
+						for(ItemShippingStatus itemShippingStatus: itemShippingStatusList){
+							if(itemShippingStatus.isSameProductAs(item)){
+								isItemAddedInShipingList = true;
+								itemShippingStatus.setQuantity(item.getQuantity() + itemShippingStatus.getQuantity());
+							}
+						}
+						
+						if(!isItemAddedInShipingList){
+							itemShippingStatusList.add(new ItemShippingStatus(item, true));
+						}
+					}
+					//subtract items of itemsGotFromCurrentWarehouse from orderItemList
+					
+					for (int i = 0; i < orderItemList.size();) {
+						Item item = orderItemList.get(i);
+						for(Item item_t: itemsGotFromCurrentWarehouse){
+							if(item.isSameProductAs(item_t)){
+								item.setQuantity(item.getQuantity() - item_t.getQuantity());
+							}
+						}
+						if(item.getQuantity() == 0){
+							orderItemList.remove(i);
+						}else{
+							i++;
+						}
+					}
+				}					
+
 				//if no more item in orderItemList break;
+				if(orderItemList.isEmpty()){
+					break;
+				}
 			}
 			//if there are still some items in orderItemList, put them in to inhandItemShippingStatusList and mark their shippingStatus as false
-			return null;
+			
+			if(!orderItemList.isEmpty()){
+				for(Item item: orderItemList){
+					itemShippingStatusList.add(new ItemShippingStatus(item, false));
+				}
+			}
+			return itemShippingStatusList;
 		}
 	}
 
