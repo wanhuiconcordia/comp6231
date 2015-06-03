@@ -3,6 +3,7 @@
  */
 package tools;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,9 +15,7 @@ import org.dom4j.Element;
  * @author Ting Zhang
  * @date 2015-05-25
  */
-public class ProductList {
-	
-	// product list contains all the product info for a specific manufacturer, key for the map is the product type
+public class ProductList implements Serializable{
 	Map<String , Product> productList = new HashMap<>();
 	
 	public Map<String,Product> getProductList(){
@@ -63,10 +62,10 @@ public class ProductList {
 	 * @throws Exception 
 	 */
 	public Product getProductInfo(String typ) throws Exception {
-		if(typ!="DVD player"&&typ!="video camera"&&typ!="TV")
-			throw new Exception("Error input of product type!");
+		if(typ.equalsIgnoreCase("DVD player")||typ.equalsIgnoreCase("video camera")||typ.equalsIgnoreCase("TV"))
+			return productList.get(typ);	
 
-		return productList.get(typ);		
+		return null;		
 		
 	}
 	
@@ -78,10 +77,10 @@ public class ProductList {
 	 * @throws Exception
 	
 	 */
-	public void loadProducts(String mfn)throws Exception{
+   public void loadProducts(String mfn)throws Exception{
 		
 		String filepath = new String(System.getProperty("user.dir")
-				+ "/src/xml/" + mfn + "_products.xml");
+				+ "/src/com/manufacturer/Data/" + mfn + "_products.xml");
 		FileManager xmlfile = new FileManager(filepath);
 		Element root = xmlfile.Read();
 		List<Element> nodes = root.elements("product");

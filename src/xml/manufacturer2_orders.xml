@@ -1,13 +1,11 @@
 <orders>
-	<order>
-		<orderNum>1</orderNum><customerRef>001</customerRef>
-		<productType>video camera</productType>
-		<quantity>1</quantity>
-		<unitPrice>300</unitPrice>
-		<ifPaid>false</ifPaid></order>
-		<order>
-		<orderNum>2</orderNum><customerRef>002</customerRef>
-		<productType>DVD player</productType>
-		<quantity>2</quantity>
-		<unitPrice>800</unitPrice>
-		<ifPaid>false</ifPaid></order></orders>
+  <order>
+    <orderNum>2</orderNum>
+    <customerRef>001</customerRef>
+    <productType>video camera</productType>
+    <quantity>1</quantity>
+    <unitPrice>300.0</unitPrice>
+    <totalPrice>200.0</totalPrice>
+    <ifPaid>false</ifPaid>
+  </order>
+</orders>

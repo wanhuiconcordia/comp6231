@@ -3,6 +3,7 @@
  */
 package tools;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,16 +21,17 @@ import org.dom4j.tree.DefaultElement;
  * @author Ting Zhang
  * @date 2015-05-22
  */
-public class PurchaseOrder {
+public class PurchaseOrder implements Serializable {
 	String manufacturerName;
 	String orderNum;
 	String customerRef;
 	Product product;
 	int quantity;
 	float unitPrice;
+	float totalPrice;
 	boolean ifPaid = false;
 	
-	PurchaseOrder(){
+	public PurchaseOrder(){
 		
 	}
 	
@@ -37,23 +39,44 @@ public class PurchaseOrder {
 		manufacturerName = mfn;
 	}
 	
-	PurchaseOrder(String on, String cr, Product pt, int qt, float up, boolean ip){
+	public PurchaseOrder(String on, String cr, Product pt, int qt, float up, float tp, boolean pa){
 		
 		orderNum = on;
 		customerRef = cr;
 		product = pt;
 		quantity = qt;
 		unitPrice = up;
-		ifPaid = ip;
+		totalPrice = tp;
+		ifPaid = pa ;
 		
+	}
+	
+	public Product getProductType(){
+		return product;
+	}
+	
+	public int getQuantity(){
+		return quantity;
 	}
 	
 	public void setManufacturername(String mfn){
 		this.manufacturerName = mfn;
 	}
 	
+	public void setPaymentStatus(boolean paid){
+		this.ifPaid = paid;
+	}
+	
 	public String getOrderNum(){
 		return orderNum;
+	}
+	
+	public float getTotalPrice(){
+		return totalPrice;
+	}
+	
+	public boolean getPaidStatus(){
+		return ifPaid;
 	}
 	
 	@Override
@@ -72,6 +95,7 @@ public class PurchaseOrder {
 				+"product type: "+this.product.getProductType()+"\n"
 				+"quantity: "+this.quantity+"\n"
 				+"unit price: "+this.unitPrice+"\n"
+				+"total price: "+this.totalPrice+"\n"
 				+"paying status: "+payingStatus+"\n"
 				;
 				
@@ -98,10 +122,11 @@ public class PurchaseOrder {
 		qt.setText(Integer.toString(quantity));
 		Element up = ne.addElement("unitPrice");
 		up.setText(Float.toString(unitPrice));
-		Element ip = ne.addElement("ifPaid");
-		if(this.ifPaid)
-			ip.setText("yes");
-		else ip.setText("no");
+		Element tp = ne.addElement("totalPrice");
+		tp.setText(Float.toString(totalPrice));
+		Element pa = ne.addElement("ifPaid");
+		pa.setText(Boolean.toString(ifPaid));
+		
 		return ne;
 	}
 	
@@ -117,7 +142,8 @@ public class PurchaseOrder {
 		Product pt = new Product();
 		int qt;
 		float up;
-		boolean ip;
+		float tp;
+		boolean pa;
 		on=root.element("orderNum").getText();
 		//System.out.println("orderNum:"+ on;)
 		cf=root.element("customerRef").getText();
@@ -125,13 +151,15 @@ public class PurchaseOrder {
 		pt.setProductType(typ);
 		qt= Integer.valueOf(root.element("quantity").getText());
 		up = Float.valueOf(root.element("unitPrice").getText());
-		String pay = root.element("ifPaid").getText();
-		if(pay.equals("yes"))
-			ip = true;
-		else
-			ip = false;
-			
-		PurchaseOrder ps = new PurchaseOrder(on, cf, pt, qt, up, ip);
+		tp = Float.valueOf(root.element("totalPrice").getText());
+		pa = Boolean.valueOf(root.element("ifPaid").getText());
+		
+		PurchaseOrder ps = new PurchaseOrder(on, cf, pt, qt, up, tp,pa);
 		return ps;
 	}
+	
+	
+	
+	
+
 }
