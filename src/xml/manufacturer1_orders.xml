@@ -3,12 +3,21 @@
 <orders>
   <order>
     <orderNum>1</orderNum>
-    <customerRef>001</customerRef>
+    <customerRef>Rat</customerRef>
     <productType>video camera</productType>
-    <quantity>1</quantity>
+    <quantity>900</quantity>
     <unitPrice>300.0</unitPrice>
-    <totalPrice>200.0</totalPrice>
-    <ifPaid>true</ifPaid>
+    <totalPrice>1500.0</totalPrice>
+    <ifPaid>false</ifPaid>
+  </order>
+  <order>
+    <orderNum>2</orderNum>
+    <customerRef>Rat</customerRef>
+    <productType>video camera</productType>
+    <quantity>900</quantity>
+    <unitPrice>300.0</unitPrice>
+    <totalPrice>1500.0</totalPrice>
+    <ifPaid>false</ifPaid>
   </order>
   <order>
     <orderNum>5</orderNum>

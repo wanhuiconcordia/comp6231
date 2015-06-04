@@ -80,7 +80,7 @@ public class ProductList implements Serializable{
    public void loadProducts(String mfn)throws Exception{
 		
 		String filepath = new String(System.getProperty("user.dir")
-				+ "/src/com/manufacturer/Data/" + mfn + "_products.xml");
+				+ "/src/xml/" + mfn + "_products.xml");
 		FileManager xmlfile = new FileManager(filepath);
 		Element root = xmlfile.Read();
 		List<Element> nodes = root.elements("product");

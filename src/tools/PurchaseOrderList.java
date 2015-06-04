@@ -34,7 +34,7 @@ public class PurchaseOrderList {
 	 */
 public void replenish(String manufacturerName)throws Exception{
 		
-		String filepath = new String(System.getProperty("user.dir") + "/src/com/manufacturer/Data/" + manufacturerName + "_orders.xml");
+		String filepath = new String(System.getProperty("user.dir") + "/src/xml/" + manufacturerName + "_orders.xml");
 		FileManager xmlfile = new FileManager(filepath);
 		OutputFormat format = OutputFormat.createPrettyPrint();
 		format.setEncoding("UTF-8");
@@ -62,7 +62,7 @@ public void replenish(String manufacturerName)throws Exception{
 	public void loadPurchaseOrders(String mfn)throws Exception{
 		Map<String , PurchaseOrder> orderList = new HashMap<>();
 		String filepath = new String(System.getProperty("user.dir")
-				+ "/src/com/manufacturer/Data/" + mfn + "_orders.xml");
+				+ "/src/xml/" + mfn + "_orders.xml");
 		FileManager xmlfile = new FileManager(filepath);
 		Element root = xmlfile.Read();
 		List<Element> nodes = root.elements("order");
@@ -71,7 +71,7 @@ public void replenish(String manufacturerName)throws Exception{
 			PurchaseOrder nm = new PurchaseOrder();
 			nm = PurchaseOrder.load(me);
 			nm.setManufacturername(mfn);
-			purchaseOrderList.put(nm.getOrderNum(), nm);
+			purchaseOrderList.put(String.valueOf(nm.getOrderNum()), nm);
 		}
 	
 	}

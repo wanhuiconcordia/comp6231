@@ -28,6 +28,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 	ProductList proList;
 	PurchaseOrderList purList;
 	String manuName;
+	int orderNo;
 
 	protected ManufacturerImpl(String name) throws Exception {
 		
@@ -38,7 +39,13 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 		proList.loadProducts(name);
 		
 		purList = new PurchaseOrderList();
-		purList.loadPurchaseOrders(name);
+		purList.loadPurchaseOrders(name);	
+		orderNo = 0;
+	}
+
+
+	private void incrementCounter() {
+		orderNo++;		
 	}
 
 
@@ -57,18 +64,49 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			throws RemoteException {
 		try
 		{
+			System.out.println("Came here 1");
+			incrementCounter();
+			
+			order = aPO; 
+			order.setOrderNum(this.orderNo);
+			
 			Map<String, Product> proMap = proList.getProductList();
 			
 			for (String key : proMap.keySet()) {
+				
+				System.out.println("Came here 2");
+				
+				System.out.println(" here key !"+key.toString());
+				System.out.println(" prod !"+aPO.getProductType().getProductType());
 				   
-				   if(key.equalsIgnoreCase(aPO.getProductType().toString()))
+				   
+				   if(key.equalsIgnoreCase(aPO.getProductType().getProductType()))
 			       {
+					   System.out.println("Came here 3");
 					   Product product = proMap.get(key);
 					   
 					   if(product.getUnitPrice()<= aPO.getProductType().unitPrice)
 					   {
-						   aPO.getQuantity();
-						   return produce(aPO);
+						   System.out.println("Came here 4");
+						   int quant =  aPO.getQuantity();
+						   
+						   while (quant > 0)
+						   {
+							   System.out.println("Came here 5");
+							   if(quant <= 100){
+								   
+								   System.out.println("Came here 6");
+								   produce(aPO.getProductType(),aPO.getQuantity());
+								   quant = quant - 100;
+							   } else
+							   {
+								   System.out.println("Came here 7");
+								   produce(aPO.getProductType(),100);
+								   quant = quant - 100;
+							   }
+						   }
+						   
+						   return true;
 					   
 					   }else
 					   {
@@ -85,19 +123,26 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 		return false;
 	}
 
-	private boolean produce(PurchaseOrder aPO) {
+	private boolean produce(Product productType, int quantity) {		
 		
-		purList.getPurchaseOrderList().put("5", aPO);
-		try {
-			purList.replenish(this.manuName);
-			return true;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if((productType.getProductType().equalsIgnoreCase("DVD player")
+		   || productType.getProductType().equalsIgnoreCase("video camera")
+		   || productType.getProductType().equalsIgnoreCase("TV"))
+		   && quantity <= 100)
+		{
+			order.setQuantity(order.getQuantity()+quantity);
+			purList.getPurchaseOrderList().put(Integer.toString(this.orderNo),this.order);
+			try {
+				purList.replenish(this.manuName);
+				return true;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}	
+			
 		return false;
+		
 	}
-
 
 	/**
 	 * Load from productList  the product  with the specified productType 

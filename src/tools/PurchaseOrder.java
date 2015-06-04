@@ -23,7 +23,7 @@ import org.dom4j.tree.DefaultElement;
  */
 public class PurchaseOrder implements Serializable {
 	String manufacturerName;
-	String orderNum;
+	int orderNum = 0;
 	String customerRef;
 	Product product;
 	int quantity;
@@ -39,9 +39,9 @@ public class PurchaseOrder implements Serializable {
 		manufacturerName = mfn;
 	}
 	
-	public PurchaseOrder(String on, String cr, Product pt, int qt, float up, float tp, boolean pa){
+	public PurchaseOrder(int no,String cr, Product pt, int qt, float up, float tp, boolean pa){
 		
-		orderNum = on;
+		orderNum = no;
 		customerRef = cr;
 		product = pt;
 		quantity = qt;
@@ -67,7 +67,11 @@ public class PurchaseOrder implements Serializable {
 		this.ifPaid = paid;
 	}
 	
-	public String getOrderNum(){
+	public void setOrderNum(int no){
+		this.orderNum = no;
+	}
+	
+	public int getOrderNum(){
 		return orderNum;
 	}
 	
@@ -77,6 +81,10 @@ public class PurchaseOrder implements Serializable {
 	
 	public boolean getPaidStatus(){
 		return ifPaid;
+	}
+	
+	public void setQuantity(int quan){
+		this.quantity = quan;
 	}
 	
 	@Override
@@ -113,7 +121,7 @@ public class PurchaseOrder implements Serializable {
 
 		DefaultElement ne = new DefaultElement("order");
 		Element on = ne.addElement("orderNum");
-		on.setText(orderNum);
+		on.setText(String.valueOf(orderNum));
 		Element cr = ne.addElement("customerRef");
 		cr.setText(customerRef);
 		Element pt = ne.addElement("productType");
@@ -137,14 +145,14 @@ public class PurchaseOrder implements Serializable {
 	 * @return the PurchaseOrder object which is initialized by the given XML element
 	*/
 	public static PurchaseOrder load(Element root){
-		String on;
+		int on;
 		String cf;
 		Product pt = new Product();
 		int qt;
 		float up;
 		float tp;
 		boolean pa;
-		on=root.element("orderNum").getText();
+		on=Integer.valueOf(root.element("orderNum").getText());
 		//System.out.println("orderNum:"+ on;)
 		cf=root.element("customerRef").getText();
 		String typ = root.element("productType").getText();
