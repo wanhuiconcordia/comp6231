@@ -5,7 +5,7 @@
     <orderNum>1</orderNum>
     <customerRef>Rat</customerRef>
     <productType>video camera</productType>
-    <quantity>900</quantity>
+    <quantity>23</quantity>
     <unitPrice>300.0</unitPrice>
     <totalPrice>1500.0</totalPrice>
     <ifPaid>false</ifPaid>

@@ -14,8 +14,6 @@ import tools.PurchaseOrder;
  *
  */
 public interface ManufacturerInterface extends Remote {
-
-  public boolean isLoginValid(String name) throws RemoteException;
   
   public boolean processPurchaseOrder(PurchaseOrder aPO) throws RemoteException;
 

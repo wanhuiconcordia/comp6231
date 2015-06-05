@@ -28,9 +28,10 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 	PurchaseOrder order;
 	ProductList proList;
 	PurchaseOrderList purList;
-	//LoggerClient client;
+	LoggerClient client;
 	String manuName;
 	int orderNo;
+	int count = 0;
 
 	protected ManufacturerImpl(String name) throws Exception {
 		
@@ -44,23 +45,12 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 		purList.loadPurchaseOrders(name);	
 		orderNo = 0;
 		
-       // client = new LoggerClient();
+        client = new LoggerClient();
 	}
 
 
 	private void incrementCounter() {
 		orderNo++;		
-	}
-
-
-	@Override
-	public boolean isLoginValid(String name) throws RemoteException {
-		
-		if(name.equalsIgnoreCase("ME"))
-		{
-			return true;
-		}
-		return false;
 	}
 
 	@Override
@@ -74,37 +64,28 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			order = aPO; 
 			order.setOrderNum(this.orderNo);
 			
+			this.count = 0;
+			
 			Map<String, Product> proMap = proList.getProductList();
 			
 			for (String key : proMap.keySet()) {
-				
-				System.out.println("Came here 2");
-				
-				System.out.println(" here key !"+key.toString());
-				System.out.println(" prod !"+aPO.getProductType().getProductType());
-				   
-				   
+
 				   if(key.equalsIgnoreCase(aPO.getProductType().getProductType()))
 			       {
-					   System.out.println("Came here 3");
 					   Product product = proMap.get(key);
 					   
 					   if(product.getUnitPrice()<= aPO.getProductType().unitPrice)
 					   {
-						   System.out.println("Came here 4");
-						   int quant =  aPO.getQuantity();
-						   
+						  int quant =  aPO.getQuantity();
+
 						   while (quant > 0)
 						   {
-							   System.out.println("Came here 5");
 							   if(quant <= 100){
-								   
-								   System.out.println("Came here 6");
-								   produce(aPO.getProductType(),aPO.getQuantity());
+								   produce(aPO.getProductType(),quant);
 								   quant = quant - 100;
+								 
 							   } else
 							   {
-								   System.out.println("Came here 7");
 								   produce(aPO.getProductType(),100);
 								   quant = quant - 100;
 							   }
@@ -121,7 +102,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			}			
 		}catch(Exception e)
 		{
-			//client.write(e.toString());
+			client.write(e.toString());
 			e.printStackTrace();
 		}
 		
@@ -135,14 +116,24 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 		   || productType.getProductType().equalsIgnoreCase("TV"))
 		   && quantity <= 100)
 		{
+			this.count++;
+			
+			if(count <= 1)
+			{
+			order.setQuantity(quantity);
+			}
+			else
+			{
 			order.setQuantity(order.getQuantity()+quantity);
-			purList.getPurchaseOrderList().put(Integer.toString(this.orderNo),this.order);
+			}
+			
 			try {
+				purList.getPurchaseOrderList().put(Integer.toString(this.orderNo),this.order);
 				purList.replenish(this.manuName);
-				//client.write("Produced product in "+this.manuName+" :"+productType.getProductType()+ "of Quantity "+quantity);
+				client.write("Produced product in "+this.manuName+" :"+productType.getProductType()+ "of Quantity "+quantity);
 				return true;
 			} catch (Exception e) {
-				//client.write(e.toString());
+				client.write(e.toString());
 				e.printStackTrace();
 			}
 		}	
@@ -163,11 +154,11 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 	public Product getProductInfo(String typ) throws RemoteException 
 	{
 		try {
-			//client.write("Returning ProductInfo of "+this.manuName);
+			client.write("Returning ProductInfo of "+this.manuName);
 			return proList.getProductInfo(typ);
 		} catch (Exception e) {
 			
-			//client.write(e.toString());
+			client.write(e.toString());
 			e.printStackTrace();
 		}
 		
@@ -194,7 +185,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 					  
 					  purList.getPurchaseOrderList().put(orderNum, value);
 					  purList.replenish(this.manuName);	
-					 // client.write("Updating Payment Status of"+this.manuName+"Order NO"+orderNum);
+					  client.write("Updating Payment Status of"+this.manuName+"Order NO"+orderNum);
 					  return true;
 				  }					  
 				  else				  
@@ -204,7 +195,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			}
 		}catch (Exception e)
 		{
-			//client.write(e.toString());
+			client.write(e.toString());
 			e.printStackTrace();
 		}
 
