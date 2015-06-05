@@ -58,7 +58,6 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			throws RemoteException {
 		try
 		{
-			System.out.println("Came here 1");
 			incrementCounter();
 			
 			order = aPO; 

@@ -1,43 +1,48 @@
 package manufacturer;
 
 import java.rmi.AlreadyBoundException;
+import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
+import retailer.RetailerImplimentation;
 
 /**
  * @author Ratzzz
  *
  */
 public class Manufacturer {
-
-	/**
-	 * @param args
-	 * @throws RemoteException 
-	 * @throws AlreadyBoundException 
-	 */
-	public static void main(String[] args) throws RemoteException, AlreadyBoundException {
-		
-		try
-		{
-			ManufacturerImpl impl1 = new ManufacturerImpl("Manufacturer1");
-			Registry reg = LocateRegistry.createRegistry(Constant.MANU1_RMI_PORT);
-			reg.bind(Constant.MANU1_RMI_ID, impl1);
-			System.out.println("Server1 Started !!");
-			
-			ManufacturerImpl impl2 = new ManufacturerImpl("Manufacturer2");
-			Registry reg2 = LocateRegistry.createRegistry(Constant.MANU2_RMI_PORT);
-			reg2.bind(Constant.MANU2_RMI_ID, impl2);
-			System.out.println("Server2 Started !!");
-			
-			ManufacturerImpl impl3 = new ManufacturerImpl("Manufacturer3");
-			Registry reg3 = LocateRegistry.createRegistry(Constant.MANU3_RMI_PORT);
-			reg3.bind(Constant.MANU3_RMI_ID, impl3);
-			System.out.println("Server3 Started !!");
-			
-		}catch(Exception e)
-		{
-			e.printStackTrace();
+	
+	private static void startRegistry(int RMIPortNum) throws RemoteException{
+		try {
+			Registry registry = LocateRegistry.getRegistry(RMIPortNum);
+			registry.list( );  
+		}
+		catch (RemoteException e) {				// No valid registry at that port. 
+			Registry registry = LocateRegistry.createRegistry(RMIPortNum);
 		}
 	}
+	
+	public static void main(String args[]) {
+		try{     
+			startRegistry(1099);
+			
+				ManufacturerImpl impl1 = new ManufacturerImpl("Manufacturer1");
+				Naming.rebind("rmi://localhost:1099/Manufacturer1", impl1);
+				System.out.println("Manufacturer 1 Server Started !!");
+				
+				ManufacturerImpl impl2 = new ManufacturerImpl("Manufacturer2");
+				Naming.rebind("rmi://localhost:1099/Manufacturer2", impl2);
+				System.out.println("Manufacturer 2 Server Started !!");
+				
+				ManufacturerImpl impl3 = new ManufacturerImpl("Manufacturer3");
+				Naming.rebind("rmi://localhost:1099/Manufacturer3", impl3);
+				System.out.println("Manufacturer 3 Server Started !!");
+		}
+		catch (Exception e) {
+			System.out.println("Exception in Retailer.main: " + e);
+		}
+	}
+
 }
