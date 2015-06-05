@@ -2,12 +2,12 @@
 
 <orders>
   <order>
-    <orderNum>3</orderNum>
-    <customerRef>001</customerRef>
-    <productType>video camera</productType>
-    <quantity>1</quantity>
+    <orderNum>1</orderNum>
+    <customerRef>Fuck3</customerRef>
+    <productType>DVD Player</productType>
+    <quantity>1700</quantity>
     <unitPrice>300.0</unitPrice>
-    <totalPrice>200.0</totalPrice>
-    <ifPaid>true</ifPaid>
+    <totalPrice>1500.0</totalPrice>
+    <ifPaid>false</ifPaid>
   </order>
 </orders>

@@ -25,15 +25,15 @@ public class Manufacturer {
 			reg.bind(Constant.MANU1_RMI_ID, impl1);
 			System.out.println("Server1 Started !!");
 			
-//			ManufacturerImpl impl2 = new ManufacturerImpl("Manufacturer2");
-//			Registry reg2 = LocateRegistry.createRegistry(Constant.MANU2_RMI_PORT);
-//			reg2.bind(Constant.MANU2_RMI_ID, impl2);
-//			System.out.println("Server2 Started !!");
-//			
-//			ManufacturerImpl impl3 = new ManufacturerImpl("Manufacturer3");
-//			Registry reg3 = LocateRegistry.createRegistry(Constant.MANU3_RMI_PORT);
-//			reg3.bind(Constant.MANU3_RMI_ID, impl3);
-//			System.out.println("Server3 Started !!");
+			ManufacturerImpl impl2 = new ManufacturerImpl("Manufacturer2");
+			Registry reg2 = LocateRegistry.createRegistry(Constant.MANU2_RMI_PORT);
+			reg2.bind(Constant.MANU2_RMI_ID, impl2);
+			System.out.println("Server2 Started !!");
+			
+			ManufacturerImpl impl3 = new ManufacturerImpl("Manufacturer3");
+			Registry reg3 = LocateRegistry.createRegistry(Constant.MANU3_RMI_PORT);
+			reg3.bind(Constant.MANU3_RMI_ID, impl3);
+			System.out.println("Server3 Started !!");
 			
 		}catch(Exception e)
 		{

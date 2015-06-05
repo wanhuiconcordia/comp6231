@@ -10,22 +10,4 @@
     <totalPrice>1500.0</totalPrice>
     <ifPaid>false</ifPaid>
   </order>
-  <order>
-    <orderNum>2</orderNum>
-    <customerRef>Rat</customerRef>
-    <productType>video camera</productType>
-    <quantity>900</quantity>
-    <unitPrice>300.0</unitPrice>
-    <totalPrice>1500.0</totalPrice>
-    <ifPaid>false</ifPaid>
-  </order>
-  <order>
-    <orderNum>5</orderNum>
-    <customerRef>raj</customerRef>
-    <productType>video camera</productType>
-    <quantity>5</quantity>
-    <unitPrice>300.0</unitPrice>
-    <totalPrice>1500.0</totalPrice>
-    <ifPaid>false</ifPaid>
-  </order>
 </orders>

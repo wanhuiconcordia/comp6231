@@ -28,25 +28,25 @@ public class ManuClient {
 	public static void main(String[] args) throws RemoteException, NotBoundException {
 		
 		Registry reg1 = LocateRegistry.getRegistry("localhost", Constant.MANU1_RMI_PORT);
-        ManufacturerInterface intobj1 = (ManufacturerInterface) reg1.lookup(Constant.MANU1_RMI_ID);
-		//System.out.println(intobj1.isLoginValid("rmi"));
-	//	System.out.println(intobj1.getProductInfo("video camera"));
-		System.out.println(intobj1.receivePayment("1", new Float(200)));
-		
-		Product pro = new Product("Manufacturer1", "Hello", new Float(300));
+        ManufacturerInterface intobj1 = (ManufacturerInterface) reg1.lookup(Constant.MANU1_RMI_ID);		
+		Product pro = new Product("Manufacturer1", "video camera", new Float(1300));
 		PurchaseOrder pur = new PurchaseOrder(0,"Rat", pro, 500, 300, 1500, false);
-		System.out.println(intobj1.processPurchaseOrder(pur));
+		intobj1.processPurchaseOrder(pur);
 		
 		
-//		Registry reg2 = LocateRegistry.getRegistry("localhost", Constant.MANU2_RMI_PORT);
-//        ManufacturerInterface intobj2 = (ManufacturerInterface) reg2.lookup(Constant.MANU2_RMI_ID);
-//       // System.out.println(intobj2.getProductInfo("video camera"));
-//        System.out.println(intobj2.receivePayment("2", new Float(400)));
-//		
-//		Registry reg3 = LocateRegistry.getRegistry("localhost", Constant.MANU3_RMI_PORT);
-//        ManufacturerInterface intobj3 = (ManufacturerInterface) reg3.lookup(Constant.MANU3_RMI_ID);
-//       // System.out.println(intobj3.getProductInfo("Hello"));
-//        System.out.println(intobj3.receivePayment("3", new Float(200)));
+		Registry reg2 = LocateRegistry.getRegistry("localhost", Constant.MANU2_RMI_PORT);
+        ManufacturerInterface intobj2 = (ManufacturerInterface) reg2.lookup(Constant.MANU2_RMI_ID);
+        Product pro2 = new Product("Manufacturer2", "TV", new Float(1300));
+		PurchaseOrder pur2 = new PurchaseOrder(0,"Fuck2", pro2, 500, 300, 1500, false);
+		intobj2.processPurchaseOrder(pur2);
+
+		
+		Registry reg3 = LocateRegistry.getRegistry("localhost", Constant.MANU3_RMI_PORT);
+        ManufacturerInterface intobj3 = (ManufacturerInterface) reg3.lookup(Constant.MANU3_RMI_ID);
+        Product pro3 = new Product("Manufacturer3", "DVD Player", new Float(1300));
+		PurchaseOrder pur3 = new PurchaseOrder(0,"Fuck3", pro3, 900, 300, 1500, false);
+		intobj3.processPurchaseOrder(pur3);
+
 	}
 
 }

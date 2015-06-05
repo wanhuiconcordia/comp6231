@@ -28,7 +28,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 	PurchaseOrder order;
 	ProductList proList;
 	PurchaseOrderList purList;
-	LoggerClient client;
+	//LoggerClient client;
 	String manuName;
 	int orderNo;
 
@@ -44,7 +44,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 		purList.loadPurchaseOrders(name);	
 		orderNo = 0;
 		
-        client = new LoggerClient();
+       // client = new LoggerClient();
 	}
 
 
@@ -121,7 +121,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			}			
 		}catch(Exception e)
 		{
-			client.write(e.toString());
+			//client.write(e.toString());
 			e.printStackTrace();
 		}
 		
@@ -139,10 +139,10 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			purList.getPurchaseOrderList().put(Integer.toString(this.orderNo),this.order);
 			try {
 				purList.replenish(this.manuName);
-				client.write("Produced product in "+this.manuName+" :"+productType.getProductType()+ "of Quantity "+quantity);
+				//client.write("Produced product in "+this.manuName+" :"+productType.getProductType()+ "of Quantity "+quantity);
 				return true;
 			} catch (Exception e) {
-				client.write(e.toString());
+				//client.write(e.toString());
 				e.printStackTrace();
 			}
 		}	
@@ -163,11 +163,11 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 	public Product getProductInfo(String typ) throws RemoteException 
 	{
 		try {
-			client.write("Returning ProductInfo of "+this.manuName);
+			//client.write("Returning ProductInfo of "+this.manuName);
 			return proList.getProductInfo(typ);
 		} catch (Exception e) {
 			
-			client.write(e.toString());
+			//client.write(e.toString());
 			e.printStackTrace();
 		}
 		
@@ -194,7 +194,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 					  
 					  purList.getPurchaseOrderList().put(orderNum, value);
 					  purList.replenish(this.manuName);	
-					  client.write("Updating Payment Status of"+this.manuName+"Order NO"+orderNum);
+					 // client.write("Updating Payment Status of"+this.manuName+"Order NO"+orderNum);
 					  return true;
 				  }					  
 				  else				  
@@ -204,7 +204,7 @@ public class ManufacturerImpl extends UnicastRemoteObject implements Manufacture
 			}
 		}catch (Exception e)
 		{
-			client.write(e.toString());
+			//client.write(e.toString());
 			e.printStackTrace();
 		}
 

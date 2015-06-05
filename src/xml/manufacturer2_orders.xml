@@ -1,11 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <orders>
   <order>
-    <orderNum>2</orderNum>
-    <customerRef>001</customerRef>
-    <productType>video camera</productType>
-    <quantity>1</quantity>
+    <orderNum>1</orderNum>
+    <customerRef>Fuck2</customerRef>
+    <productType>TV</productType>
+    <quantity>900</quantity>
     <unitPrice>300.0</unitPrice>
-    <totalPrice>200.0</totalPrice>
+    <totalPrice>1500.0</totalPrice>
     <ifPaid>false</ifPaid>
   </order>
 </orders>
