@@ -8,16 +8,26 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 
+/**
+ * @author comp6231.team5
+ *
+ */
 public class ConfigureManager {
 	private static ConfigureManager instance = null;
 	private HashMap<String, String> data;
 	
 	
+	/**
+	 * Constructor
+	 */
 	protected ConfigureManager(){
 		data = new HashMap<String, String>();
-		//loadFile("settings.conf");
 	}
 	
+	/**
+	 * get an instance of class ConfigureManager
+	 * @return an instance of ConfitureManager
+	 */
 	public static ConfigureManager getInstance(){
 		if(instance == null){
 			instance = new ConfigureManager();
@@ -25,6 +35,11 @@ public class ConfigureManager {
 		return instance;
 	}
 	
+	/**
+	 * load the file with the name of fileName and store the contents into data
+	 * @param fileName
+	 * @return true if load file successfully ,false if not 
+	 */
 	public boolean loadFile(String fileName){
 		boolean bRet = false;
 		try {
@@ -71,6 +86,12 @@ public class ConfigureManager {
 		return bRet;
 	}
 
+	/**
+	 * get the String value to which the specific key value is matched in data
+	 * @param variableName
+	 * @param defaultValue
+	 * @return a string value
+	 */
 	public String getString(String variableName, String defaultValue){
 		String value = data.get(variableName);
 		if(value == null){
@@ -82,6 +103,12 @@ public class ConfigureManager {
 			
 	}
 	
+	/**
+	 * get the boolean value to which the specific key value is matched in data
+	 * @param variableName
+	 * @param defaultValue
+	 * @return a boolean value
+	 */
 	public boolean getBool(String variableName, Boolean defaultValue){
 		String value = data.get(variableName);
 		if(value == null){
@@ -92,6 +119,12 @@ public class ConfigureManager {
 		}
 	}
 	
+	/**
+	 * get the integer value to which the specific key value is matched in data
+	 * @param variableName
+	 * @param defaultValue
+	 * @return an integer value
+	 */
 	public int getInt(String variableName, int defaultValue){
 		String value = data.get(variableName);
 		if(value == null){
@@ -106,6 +139,9 @@ public class ConfigureManager {
 		}
 	}
 	
+	/**
+	 * out put the contents in data to the screen
+	 */
 	public void display(){
 		for (HashMap.Entry<String, String> entry : data.entrySet()) {
 		    String key = entry.getKey();

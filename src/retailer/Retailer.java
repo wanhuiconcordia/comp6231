@@ -4,10 +4,21 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import tools.LoggerClient;
 
+
+/**
+ * @author comp6231.team5
+ *
+ */
 public class Retailer {
-	//This method starts a RMI registry on the local host, if
-	//it does not already exists at the specified port number.
+	
+	/**
+	 * This method starts a RMI registry on the local host, if
+	 *it does not already exists at the specified port number.
+	 * @param RMIPortNum
+	 * @throws RemoteException
+	 */
 	private static void startRegistry(int RMIPortNum) throws RemoteException{
 		try {
 			Registry registry = LocateRegistry.getRegistry(RMIPortNum);
@@ -18,10 +29,15 @@ public class Retailer {
 		}
 	}
 	
+	/**
+	 * start retailer server, and register a remote RegailerImplimentation object.
+	 * @param args
+	 */
 	public static void main(String args[]) {
 		try{     
 			startRegistry(1099);
-			RetailerImplimentation retailerObj = new RetailerImplimentation();
+			LoggerClient loggerClient = new LoggerClient();
+			RetailerImplimentation retailerObj = new RetailerImplimentation(loggerClient);
 			Naming.rebind("rmi://localhost:1099/retailer", retailerObj);
 			System.out.println("Retailer server is ready.");
 		}

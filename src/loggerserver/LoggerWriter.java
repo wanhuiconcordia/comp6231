@@ -6,6 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
+/**
+ * @author comp6231.team5
+ * LoggerWriter maintain a printWriter and html related tags. It write msg to a html file.
+ */
 public class LoggerWriter {
 	private PrintWriter loggerWriter;
 		
@@ -19,6 +23,13 @@ public class LoggerWriter {
 	
 	private SimpleDateFormat simpleDateFormat;
 	
+	/**
+	 * Constructor
+	 * @param fileName
+	 * @param useHtmlStyle
+	 * @throws FileNotFoundException
+	 * @throws UnsupportedEncodingException
+	 */
 	public LoggerWriter(String fileName, boolean useHtmlStyle) throws FileNotFoundException, UnsupportedEncodingException{
 		this.useHtmlStyle = useHtmlStyle;
 		loggerWriter = new PrintWriter(fileName, "UTF-8");	
@@ -29,7 +40,12 @@ public class LoggerWriter {
 		
 		simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss:S");
 	}
-	public synchronized void write(String host, String msg){
+	/**
+	 * write msg to file with html format in 3 coloms: timestamp, host, message
+	 * @param host
+	 * @param msg
+	 */
+	public /*synchronized*/ void write(String host, String msg){
 		String timestamp = simpleDateFormat.format(Calendar.getInstance().getTime());
 		if(useHtmlStyle)
 		{
@@ -41,6 +57,9 @@ public class LoggerWriter {
 		loggerWriter.flush();
 	}
 	
+	/**
+	 * write the html end tag
+	 */
 	public void stop(){
 		if(useHtmlStyle){
 			loggerWriter.println(htmlTerminator);

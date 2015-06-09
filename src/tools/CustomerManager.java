@@ -7,6 +7,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+/**
+ * @author comp6231.team5
+ *
+ */
 public class CustomerManager {
 
 	private ArrayList<Customer> customers;
@@ -16,6 +20,9 @@ public class CustomerManager {
 		loadCustomers();
 	}
 
+	/**
+	 *  save all the customers to xml file
+	 */
 	public void saveCustomers()
 	{
 		try
@@ -31,6 +38,9 @@ public class CustomerManager {
 		}
 	}
 
+	/**
+	 * load all customers from xml file.
+	 */
 	public void loadCustomers()
 	{
 		try
@@ -50,6 +60,18 @@ public class CustomerManager {
 		}
 	}
 
+	/**
+	 * register a customer according the info provided
+	 * @param name
+	 * @param password
+	 * @param street1
+	 * @param street2
+	 * @param city
+	 * @param state
+	 * @param zip
+	 * @param country
+	 * @return an object of SignUpResult
+	 */
 	public synchronized SignUpResult register(String name, String password, String street1, String street2, String city, String state, String zip, String country){
 		for(Customer customer: customers){
 			if(customer.getName().equals(name) && customer.getPassword().equals(password)){
@@ -73,6 +95,11 @@ public class CustomerManager {
 		return null;
 	}
 	
+	/**
+	 * find a customer in customer list by the reference number
+	 * @param customerReferenceNumber
+	 * @return ture if find, false if not
+	 */
 	public synchronized boolean find(int customerReferenceNumber){
 		for(Customer customer: customers){
 			if(customer.getCustomerReferenceNumber() == customerReferenceNumber){
@@ -82,6 +109,11 @@ public class CustomerManager {
 		return false;
 	}
 	
+	/**
+	 * get a customer by reference number
+	 * @param customerReferenceNumber
+	 * @return the customer
+	 */
 	public synchronized Customer getCustomerByReferenceNumber(int customerReferenceNumber){
 		for(Customer customer: customers){
 			if(customer.getCustomerReferenceNumber() == customerReferenceNumber){

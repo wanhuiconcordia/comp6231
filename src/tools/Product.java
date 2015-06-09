@@ -1,121 +1,83 @@
 package tools;
+
 import java.io.Serializable;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-
-
-
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
-import org.dom4j.tree.DefaultElement;
 
 /**
- * 
- */
-
-/**
- * @author Ting Zhang
- * @date 2015-05-20
+ * @author comp6231.team5
+ *
  */
 public class Product implements Serializable {
+	private static final long serialVersionUID = 6733918368705678280L;
+	protected String manufacturerName;
+	protected String productType;
+	protected float unitPrice;
 	
-
-	String manufacturerName = "";
-	String productType = "";
-    public float unitPrice;
-	
-	
-	Product(Product product){
-		
+	/**
+	 * constructor
+	 * @param manufacturerName
+	 * @param productType
+	 * @param unitPrice
+	 */
+	public Product(String manufacturerName, String productType, float unitPrice){
+		this.manufacturerName = manufacturerName;
+		this.productType = productType;
+		this.unitPrice = unitPrice;
 	}
 	
-	Product(String mfn){
-		this.setManufacturerName(mfn);
+	/**
+	 * constructor
+	 * @param product
+	 */
+	public Product(Product product){
+		this.manufacturerName = product.manufacturerName;
+		this.productType = product.productType;
+		this.unitPrice = product.unitPrice;
 	}
 	
-	Product(String mfn, String ptt){
-		this.setManufacturerName(mfn);
-		this.setProductType(ptt);
+	/**
+	 * determine if the current product is the same as the other one
+	 * @param otherProduct
+	 * @return true if the same, false if not
+	 */
+	public boolean isSame(Product otherProduct){
+		return (manufacturerName == otherProduct.manufacturerName)
+				&& (productType == otherProduct.productType)
+				&& (unitPrice == otherProduct.unitPrice);
 	}
 	
-	Product(String ptt, float up){
-		this.setProductType(ptt);
-		this.setUnitPrice(up);
-	}
-	
-	public Product(String mfn, String ptt, float up){
-		this.setManufacturerName(mfn);
-		this.setProductType(ptt);
-		this.setUnitPrice(up);
-	}
-	public Product() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public void setManufacturerName(String newmfn){
-		manufacturerName = newmfn;
-	}
-	
-	public void setProductType(String pt){
-		productType = pt;
-	}
-	
-	public void setUnitPrice(float up){
-		unitPrice = up;
-	}
-	
+	/**
+	 * @return manufacturer name
+	 */
 	public String getManufacturerName(){
 		return manufacturerName;
 	}
 	
+	/**
+	 * @return product type
+	 */
 	public String getProductType(){
 		return productType;
 	}
 	
+	/**
+	 * @return
+	 */
 	public float getUnitPrice(){
 		return unitPrice;
 	}
 	
-	@Override
-	/**
-	 * Overridden method.
-	 * @see Object.toString().
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public Product clone(){
+		return new Product(this);
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
 	public String toString(){
-		
-		return "manufacturerName:"+this.getManufacturerName()+"\n"
-				+"productType: "+this.getProductType()+"\n"
-				+"unitPrice: "+unitPrice+"\n"
-				;
-				
-				
+		return manufacturerName
+				+ ",\t" + productType 
+				+ ",\t" + unitPrice;
 	}
-	
-	
-	/**
-	 * Parse XML element and generate a Product object 
-	 * 
-	 * @param root
-	 *  
-	 * @return the Product object which is initialized by the given XML element
-	*/
-	public static Product load(Element root){
-		String productType ="";
-		float unitPrice;
-		productType=root.element("productType").getText();
-		unitPrice = Float.valueOf(root.element("unitPrice").getText());
-		
-		Product pt = new Product(productType, unitPrice);
-		return pt;
-	}
-
 }

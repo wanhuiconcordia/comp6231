@@ -2,6 +2,10 @@ package loggerserver;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
+/**
+ * Connection maintains the connection to logger server
+ * @author comp6231.team5
+ */
 public class Connection extends Thread{
 	private Socket socket;
 	private boolean keepWorking;
@@ -10,6 +14,12 @@ public class Connection extends Thread{
 	private LoggerWriter loggerWriter;
 	private DataInputStream in;	
 	
+	/**
+	 * Constructor
+	 * @param socket_t
+	 * @param loggerWriter
+	 * @throws IOException
+	 */
 	public Connection(Socket socket_t, LoggerWriter loggerWriter) throws IOException{
 		keepWorking = true;
 		isWorking = false;
@@ -21,6 +31,9 @@ public class Connection extends Thread{
 		this.loggerWriter = loggerWriter;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public void run(){
 		isWorking = true;
 		while(keepWorking){
@@ -39,6 +52,9 @@ public class Connection extends Thread{
 		isWorking = false;
 	}
 	
+	/**
+	 * cleanup will wait for reading thread to finish its job then close socket
+	 */
 	public void cleanup() {
 		keepWorking = false;
 		while(isWorking){
@@ -58,6 +74,9 @@ public class Connection extends Thread{
 		}
 	}
 	
+	/**
+	 * status shows is reading thread still working or not
+	 */
 	public void status(){
 		if(isWorking){
 			System.out.println("Connection is active to receive message from:" + remoteHost);

@@ -12,6 +12,11 @@ import java.util.Scanner;
 
 import tools.ConfigureManager;
 
+/**
+ * @author comp6231.team5
+ * Logger server respects multiple client connection in different thread.
+ * Once a message comes, it will save the msg to a html file.
+ */
 public class LoggerServer extends Thread{
 	private ServerSocket serverSocket;
 	private boolean keepWorking;
@@ -20,10 +25,14 @@ public class LoggerServer extends Thread{
 
 	private LoggerWriter loggerWriter;
 
+	/**
+	 * Constructor
+	 * @throws IOException
+	 */
 	public LoggerServer() throws IOException{
 		keepWorking = true;
 		isWorking = false;
-
+		ConfigureManager.getInstance().loadFile("./settings/logger_server_settings.conf");
 		serverSocket = new ServerSocket(ConfigureManager.getInstance().getInt("loggerServerPort", 2020));
 		serverSocket.setSoTimeout(100);
 
@@ -40,6 +49,9 @@ public class LoggerServer extends Thread{
 		System.out.println("Logger file is created:" + logFileName);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Thread#run()
+	 */
 	public void run(){
 		try {
 			System.out.println("Logger server, " + InetAddress.getLocalHost() + ", is waiting for connecting on port " + serverSocket.getLocalPort());
@@ -68,6 +80,13 @@ public class LoggerServer extends Thread{
 		isWorking = false;
 	}
 
+	/**
+	 * cleanup 
+	 * # stops the thread which respond for accepting connections
+	 * # shut down all connections
+	 * # close server socket
+	 * # close logger writer 
+	 */
 	public void cleanup(){
 		keepWorking = false;
 		System.out.print("Waiting for the LoggerServer to stop connection thread.");
@@ -96,6 +115,9 @@ public class LoggerServer extends Thread{
 		System.out.println("\nLoggerServer finished cleaning up.");
 	}
 	
+	/**
+	 * status shows current connections status and the status of connection thread
+	 */
 	public void status(){
 		if(isWorking){
 			System.out.println("Logger server is active to accept connections.");
@@ -108,6 +130,10 @@ public class LoggerServer extends Thread{
 		}
 	}
 	
+	/**
+	 * main
+	 * @param args
+	 */
 	public static void main(String [] args)
 	{
 		try
